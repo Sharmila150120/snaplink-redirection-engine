@@ -16,7 +16,7 @@ with app.app_context():
     db.create_all()
 
 def generate_id():
-    # Creates a random mix of letters and numbers
+   
     chars = string.ascii_letters + string.digits
     return ''.join(random.choice(chars) for _ in range(6))
 
@@ -25,7 +25,7 @@ def index():
     short_url = None
     if request.method == 'POST':
         long_url = request.form['url']
-        # Check if we already shortened this one
+        
         existing = URL.query.filter_by(original=long_url).first()
         
         if existing:
@@ -39,7 +39,7 @@ def index():
         short_url = request.host_url + short_id
     return render_template('index.html', short_url=short_url)
 
-# The REDIRECT Engine
+
 @app.route('/<short_id>')
 def follow_link(short_id):
     link = URL.query.filter_by(short=short_id).first_or_404()
